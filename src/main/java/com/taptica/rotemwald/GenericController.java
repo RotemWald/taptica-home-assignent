@@ -14,7 +14,7 @@ public class GenericController {
     }
 
     @RequestMapping(value="/fibo", method=RequestMethod.GET)
-    public Integer fibonacci(@RequestParam(value="n", defaultValue="0") Integer n) {
+    public int fibonacci(@RequestParam(value="n", defaultValue="0") int n) {
         return fib(n);
     }
 
