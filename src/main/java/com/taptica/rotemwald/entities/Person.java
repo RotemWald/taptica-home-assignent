@@ -1,4 +1,4 @@
-package com.taptica.rotemwald;
+package com.taptica.rotemwald.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

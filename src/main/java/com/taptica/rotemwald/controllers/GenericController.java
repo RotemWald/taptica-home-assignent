@@ -1,18 +1,30 @@
-package com.taptica.rotemwald;
+package com.taptica.rotemwald.controllers;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * GenericController manages all general-based requests
+ */
 @RestController
 public class GenericController {
 
+    /**
+     * Hello World route
+     * @return hello world message
+     */
     @RequestMapping(value="/hello", method=RequestMethod.GET)
     public String greeting() {
         return "Hello World";
     }
 
+    /**
+     * Fibonacci n-th element calculator route
+     * @param n number of requested sequence element
+     * @return requested fibonacci series number by sequence number
+     */
     @RequestMapping(value="/fibo", method=RequestMethod.GET)
     public int fibonacci(@RequestParam(value="n", defaultValue="0") int n) {
         return fib(n);

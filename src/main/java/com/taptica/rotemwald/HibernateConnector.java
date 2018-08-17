@@ -1,11 +1,16 @@
 package com.taptica.rotemwald;
 
+import com.taptica.rotemwald.entities.Person;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+/**
+ * Thread-safe Hibernate connector
+ */
 public class HibernateConnector {
 
-    private static HibernateConnector instance = null;
+    private static HibernateConnector instance;
+    private static Object mutex = new Object();
 
     private SessionFactory sessionFactory;
 
@@ -14,10 +19,17 @@ public class HibernateConnector {
     }
 
     public static HibernateConnector getInstance() {
-        if (instance == null) {
-            instance  = new HibernateConnector();
+        HibernateConnector result = instance;
+
+        if (result == null) {
+            synchronized (mutex) {
+                result = instance;
+                if (result == null)
+                    instance = result = new HibernateConnector();
+            }
         }
-        return instance;
+
+        return result;
     }
 
     public SessionFactory getSessionFactory() {
