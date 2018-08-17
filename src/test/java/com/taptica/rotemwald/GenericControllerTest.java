@@ -21,22 +21,48 @@ public class GenericControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Hello World route test
+     * @throws Exception
+     */
     @Test
     public void helloRouteTest() throws Exception {
-        this.mockMvc.perform(get("/hello")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/hello")) // after request, response should be "Hello World"
+                .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Hello World")));
     }
 
+    /**
+     * Fibonacci route test
+     * @throws Exception
+     */
     @Test
     public void fiboRouteTest() throws Exception {
-        this.mockMvc.perform(get("/fibo?n=0")).andDo(print()).andExpect(status().isOk())
+        /* General test cases */
+        this.mockMvc.perform(get("/fibo?n=0")) // element #0 is 0
+                .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString("0")));
-        this.mockMvc.perform(get("/fibo?n=3")).andDo(print()).andExpect(status().isOk())
+
+        this.mockMvc.perform(get("/fibo?n=3")) // element #3 is 2
+                .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString("2")));
-        this.mockMvc.perform(get("/fibo?n=6")).andDo(print()).andExpect(status().isOk())
+
+        this.mockMvc.perform(get("/fibo?n=6")) // element #6 is 8
+                .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString("8")));
-        this.mockMvc.perform(get("/fibo")).andDo(print()).andExpect(status().isOk())
+
+        /* Special test cases */
+        this.mockMvc.perform(get("/fibo")) // request without parameter, expected parameter to be zero
+                .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString("0")));
-        this.mockMvc.perform(get("/fibo?n=bla")).andDo(print()).andExpect(status().isBadRequest());
+
+        this.mockMvc.perform(get("/fibo?n=bla")) // request with string parameter, expected error
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 }
